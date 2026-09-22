@@ -1,0 +1,53 @@
+# DeepTutor 一键部署工具（Windows）
+
+[English](README.md) | [简体中文](README.zh-CN.md)
+
+DeepTutor 一键部署工具（Windows）。双击 .bat 即自动完成：检测/安装 Python 与 Node.js 便携版、下载 DeepTutor 最新源码、构建前端、创建桌面快捷方式。支持自定义安装盘符、ghproxy 镜像加速、PyPI 回退与失败自动日志。装完即用，双击桌面图标以独立窗口启动。
+
+> DeepTutor © 香港大学数据智能实验室 — [HKUDS/DeepTutor](https://github.com/HKUDS/DeepTutor)（MIT 协议）。本仓库仅提供部署脚本，不含 DeepTutor 源代码。
+
+## 基本要求
+
+- Windows 10/11 64 位
+- 可访问 GitHub（内置 ghproxy 镜像回退）
+- 至少 5 GB 可用磁盘空间
+- Python 3.11–3.13 —— 没有会通过 winget 自动安装
+- Node.js 20+ —— 没有会自动安装便携版 Node 22 LTS
+
+## 安装步骤
+
+1. 把压缩包解压到任意位置（比如桌面）。
+2. 双击文件夹里的【**DeepTutor-安装.bat**】，会自动弹出终端窗口并开始安装（3–8 分钟左右）。
+3. 安装过程中如果提示缺少 Python 或 Node，输入 `y` 回车即可自动安装。
+   - 首次安装时会依次询问 DeepTutor / Python / Node.js 的安装位置，想放到其他硬盘的可输入自定义路径（如 `D:\DeepTutor`），直接回车则使用默认路径。已安装过的依赖不会重复询问；更新时也不会再询问位置。
+   - 如果安装失败，窗口会自动用记事本打开完整日志（`DeepTutor-安装日志.txt`），可直接复制报错内容反馈，不需要截图；按 `R` 还可以直接重试安装。
+
+安装完成后，双击桌面上的 **DeepTutor** 快捷方式即可启动。首次启动需要构建一次 WebUI（会弹出进度窗口），可能需要几分钟。
+
+## 高级用法（可选，需手动打开终端）
+
+```powershell
+# 自定义安装 / 数据 / 运行时位置
+powershell -ExecutionPolicy Bypass -File .\DeepTutor-Install.ps1 -InstallRoot "D:\DeepTutor" -DataRoot "E:\Data" -RuntimeRoot "F:\Runtime"
+# 自定义 Node.js / Python 位置
+powershell -ExecutionPolicy Bypass -File .\DeepTutor-Install.ps1 -NodeRoot "D:\NodeHome" -PythonRoot "D:\Python313"
+# 全自动静默安装（跳过所有提示）
+powershell -ExecutionPolicy Bypass -File .\DeepTutor-Install.ps1 -NoPrompt
+```
+
+## 卸载方式
+
+保留数据：
+1. 关闭 DeepTutor。
+2. 删除 `C:\Users\[用户名]\AppData\Local\DeepTutor\versions` 下的版本目录。
+3. 删除桌面快捷方式。
+
+完全卸载：
+1. 关闭 DeepTutor。
+2. 删除 `C:\Users\[用户名]\AppData\Local\DeepTutor` 整个目录。
+3. 删除桌面快捷方式。
+
+## 协议
+
+BSD 3-Clause Clear —— 见 [LICENSE](LICENSE)。
+DeepTutor 本体由香港大学数据智能实验室以 MIT 协议发布。
